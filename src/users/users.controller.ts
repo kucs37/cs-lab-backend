@@ -26,6 +26,6 @@ export class UsersController {
   @ApiBearerAuth()
   // @UseGuards(AuthGuard("google"))
   async googleCallback(@Body() userDto: UserTokenDto, @Req() req) {
-    return this.usersService.api_findUser(req);
+    return this.usersService.api_findUser(req); 
   }
 }
