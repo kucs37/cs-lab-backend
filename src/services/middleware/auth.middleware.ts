@@ -1,9 +1,12 @@
 import { Injectable, NestMiddleware } from "@nestjs/common";
 import { Request, Response, NextFunction } from "express";
 import { Auth, google } from "googleapis";
+import { LogService } from "../log/log.service";
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
+  private logger = new LogService(AuthMiddleware.name);
+
   oauthClient: Auth.OAuth2Client;
   constructor() {
     const clientID = process.env.GOOGLE_CLIENT_ID;
@@ -19,6 +22,7 @@ export class AuthMiddleware implements NestMiddleware {
     const token = req.headers.authorization.split(" ")[1];
     const tokenInfo = await this.oauthClient.getTokenInfo(token);
     const email = tokenInfo.email;
+    this.logger.debug("tokenData->",tokenInfo)
     try {
       if (email) {
         console.log("token is work");
