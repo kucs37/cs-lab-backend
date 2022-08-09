@@ -1,1 +1,1 @@
-# Hello world
+# CS Lab backend
