@@ -11,10 +11,9 @@ export class User extends Model {
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
-    autoIncrement: true,
     primaryKey: true,
   })
-  user_id: number;
+  studentCode: number;
 
   @Column({
     allowNull: false,
@@ -31,17 +30,6 @@ export class User extends Model {
     allowNull: false,
   })
   email: string;
-
-  @Column({
-    allowNull: false,
-  })
-  password: string;
-
-  @Column({
-    defaultValue: 0,
-    allowNull: true,
-  })
-  role: number;
 }
 // User.pre('create', function (next) {
 //   const user: any = this;

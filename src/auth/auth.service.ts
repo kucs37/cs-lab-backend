@@ -87,6 +87,9 @@ export class AuthService {
     this.logger.debug("validateUserByJwt");
     const user = await this.userAuthService.findUser(payload.id);
     if (!user) throw new UnauthorizedException();
+    if (!user.inClass) {
+      return null
+    }
     return user;
   }
 

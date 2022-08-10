@@ -31,11 +31,11 @@ export class UserAuthService implements OnApplicationBootstrap {
     this.clearCache();
   }
 
-  async findUser(id: number): Promise<UserCache> {
+  async findUser(studentCode: number): Promise<UserCache> {
     const tag = this.findUser.name;
     try {
       // ─────────────────────────────────────────────────────────────────
-      const resultCache = await this.getCache(id);
+      const resultCache = await this.getCache(studentCode);
       if (resultCache) {
         this.logger.debug(`${tag} data from cache.`);
         return resultCache;
@@ -43,13 +43,23 @@ export class UserAuthService implements OnApplicationBootstrap {
 
       // ─────────────────────────────────────────────────────────────────
       const result = await this.userDB.findOne({
-        where: { user_id: id },
+        where: { studentCode: studentCode },
       });
-
+      if (!result) {
+        const userCache: UserCache = {
+          inClass: false,
+          studentCode: null,
+          firstName: "",
+          lastName: "",
+          email: "",
+        };
+        return userCache;
+      }
       this.logger.debug(`${tag} result -> `, result);
 
       const userCache: UserCache = {
-        _id: String(result.user_id),
+        inClass: true,
+        studentCode: result.studentCode,
         firstName: result.firstName,
         lastName: result.lastName,
         email: result.email,
@@ -68,7 +78,7 @@ export class UserAuthService implements OnApplicationBootstrap {
 
   private setCache(data: UserCache) {
     this.cacheManager.set(
-      `${this.keyCache}-${data._id}`,
+      `${this.keyCache}-${data.studentCode}`,
       JSON.stringify(data),
       {
         ttl: 60 * 5,
@@ -76,8 +86,10 @@ export class UserAuthService implements OnApplicationBootstrap {
     );
   }
 
-  private async getCache(id: number) {
-    const result = await this.cacheManager.get(`${this.keyCache}-${id}`);
+  private async getCache(studentCode: number) {
+    const result = await this.cacheManager.get(
+      `${this.keyCache}-${studentCode}`
+    );
     if (result) {
       const userCache: UserCache = JSON.parse(`${result}`);
       return userCache;
@@ -85,9 +97,9 @@ export class UserAuthService implements OnApplicationBootstrap {
     return null;
   }
 
-  private async delCache(id: number) {
-    const result = await this.getCache(id);
-    if (result) this.cacheManager.del(`${this.keyCache}-${id}`);
+  private async delCache(studentCode: number) {
+    const result = await this.getCache(studentCode);
+    if (result) this.cacheManager.del(`${this.keyCache}-${studentCode}`);
   }
 
   private async clearCache() {
@@ -96,7 +108,8 @@ export class UserAuthService implements OnApplicationBootstrap {
 }
 
 export interface UserCache {
-  _id: string;
+  inClass: boolean;
+  studentCode: number;
   firstName: string;
   lastName: string;
   email: string;
