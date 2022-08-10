@@ -9,12 +9,13 @@ import { databaseProviders } from "../db/entities/db.provider";
 import { GoogleStrategy } from "../auth/strategies/google.strategy";
 import { GoogleAuthenticationService } from "../services/google/googleAuthentication.service";
 import { AuthMiddleware } from "../services/middleware/auth.middleware";
+import { JwtStrategy } from "../auth/strategies/jwt.strategy";
 
 @Module({
   imports: [
     CacheModule.register(),
     HttpModule,
-    // PassportModule.register({ defaultStrategy: "google", session: false }),
+    PassportModule.register({ defaultStrategy: "jwt", session: false }),
     forwardRef(() => AuthModule),
   ],
   controllers: [UsersController],
@@ -22,8 +23,9 @@ import { AuthMiddleware } from "../services/middleware/auth.middleware";
     UsersService,
     UserAuthService,
     ...databaseProviders,
-    GoogleStrategy,
+    JwtStrategy,
     GoogleAuthenticationService,
+    // GoogleStrategy,
   ],
   exports: [UsersService, UserAuthService],
 })

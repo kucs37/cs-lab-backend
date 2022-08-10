@@ -16,6 +16,7 @@ import {
   ResJwtMyKu,
   ResJwtMyKuData,
 } from "./interfaces/res-jwt-myku.interface";
+import { VerifyGoogleDto } from "./dto/verify-google";
 
 @Injectable()
 export class AuthService {
@@ -25,6 +26,31 @@ export class AuthService {
     private userAuthService: UserAuthService,
     private jwtService: JwtService
   ) {}
+
+  api_verifyGoogleAuth(req: any) {
+    const tag = this.api_verifyGoogleAuth.name;
+    try {
+      const resData = {
+        resCode: EnumStatus.success,
+        resData: this.verifyGoogleAuth(req),
+        msg: "",
+      };
+      return resData;
+    } catch (error) {
+      this.logger.error(`${tag} -> `, error);
+      throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+  verifyGoogleAuth(req: any) {
+    const tag = this.verifyGoogleAuth.name;
+    try {
+      const res = { data: req.user };
+      return res;
+    } catch (error) {
+      this.logger.error(`${tag} -> `, error);
+      throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
   googleLogin(req) {
     if (!req.user) {
       return "No user from google";
@@ -38,6 +64,7 @@ export class AuthService {
   async createJwtPayload(user: CreateJwtPayload) {
     // todo user type
     const data: JwtPayload = {
+      id: 1,
       firstNameTh: user.firstNameTh,
       lastNameTh: user.lastNameTh,
       middleNameTh: user.middleNameTh,

@@ -31,7 +31,7 @@ export class UserAuthService implements OnApplicationBootstrap {
     this.clearCache();
   }
 
-  async findUser(id: string): Promise<UserCache> {
+  async findUser(id: number): Promise<UserCache> {
     const tag = this.findUser.name;
     try {
       // ─────────────────────────────────────────────────────────────────
@@ -76,7 +76,7 @@ export class UserAuthService implements OnApplicationBootstrap {
     );
   }
 
-  private async getCache(id: string) {
+  private async getCache(id: number) {
     const result = await this.cacheManager.get(`${this.keyCache}-${id}`);
     if (result) {
       const userCache: UserCache = JSON.parse(`${result}`);
@@ -85,7 +85,7 @@ export class UserAuthService implements OnApplicationBootstrap {
     return null;
   }
 
-  private async delCache(id: string) {
+  private async delCache(id: number) {
     const result = await this.getCache(id);
     if (result) this.cacheManager.del(`${this.keyCache}-${id}`);
   }
