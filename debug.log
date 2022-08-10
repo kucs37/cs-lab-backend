@@ -270,3 +270,6 @@ debug: [38;2;140;209;13m[2022-08-10 13:55:05][AuthService] =>  validateUserByJw
 debug: [38;2;140;209;13m[2022-08-10 13:55:05][UserAuthService] =>  findUser result ->  {"user_id":1,"firstName":"test","lastName":"TEST","email":"kittikun.bu@ku.th","password":"12345678","role":0,"createdAt":"2022-08-10T08:51:50.000Z","updatedAt":"2022-08-10T08:51:50.000Z"}  [39m
 debug: [38;2;140;209;13m[2022-08-10 13:55:05][UserAuthService] =>  findUser data from DB.  [39m
 debug: [38;2;140;209;13m[2022-08-10 14:04:02][main] =>  start ... 3000  [39m
+debug: [38;2;140;209;13m[2022-08-10 14:06:21][AuthService] =>  validateUserByJwt  [39m
+debug: [38;2;140;209;13m[2022-08-10 14:06:21][UserAuthService] =>  findUser result ->  {"user_id":1,"firstName":"test","lastName":"TEST","email":"kittikun.bu@ku.th","password":"12345678","role":0,"createdAt":"2022-08-10T08:51:50.000Z","updatedAt":"2022-08-10T08:51:50.000Z"}  [39m
+debug: [38;2;140;209;13m[2022-08-10 14:06:21][UserAuthService] =>  findUser data from DB.  [39m

@@ -15,7 +15,7 @@ export class AuthController {
     return this.authService.api_userLogin(userLoginDto);
   }
 
-  @Post("verifyGoogleAuth") // 
+  @Post("verifyGoogleAuth")
   @ApiBearerAuth()
   @UseGuards(AuthGuard())
   async verifyGoogleAuth(
