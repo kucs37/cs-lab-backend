@@ -10,10 +10,10 @@ import { VerifyGoogleDto } from "./dto/verify-google";
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post("studentLogin")
-  loginUser(@Body() userLoginDto: UserLoginDto) {
-    return this.authService.api_userLogin(userLoginDto);
-  }
+  // @Post("studentLogin")
+  // loginUser(@Body() userLoginDto: UserLoginDto) {
+  //   return this.authService.api_userLogin(userLoginDto);
+  // }
 
   @Post("verifyGoogleAuth")
   @ApiBearerAuth()
@@ -22,6 +22,15 @@ export class AuthController {
     @Req() req,
   ) {
     return this.authService.api_verifyGoogleAuth(req);
+  }
+
+  @Post("verifyToken")
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard())
+  async verifyToken(
+    @Req() req,
+  ) {
+    return this.authService.api_verifyToken(req);
   }
 
   // @Get("googleLogin")
