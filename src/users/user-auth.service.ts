@@ -49,9 +49,9 @@ export class UserAuthService implements OnApplicationBootstrap {
         const userCache: UserCache = {
           inClass: false,
           studentCode: null,
-          firstName: "",
-          lastName: "",
-          email: "",
+          firstName: null,
+          lastName: null,
+          // email: "",
         };
         return userCache;
       }
@@ -62,7 +62,7 @@ export class UserAuthService implements OnApplicationBootstrap {
         studentCode: result.studentCode,
         firstName: result.firstName,
         lastName: result.lastName,
-        email: result.email,
+        // email: result.email,
       };
 
       this.logger.debug(`${tag} data from DB.`);
@@ -109,8 +109,8 @@ export class UserAuthService implements OnApplicationBootstrap {
 
 export interface UserCache {
   inClass: boolean;
-  studentCode: number;
+  studentCode: string;
   firstName: string;
   lastName: string;
-  email: string;
+  // email: string;
 }

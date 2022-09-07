@@ -45,7 +45,9 @@ export class AuthService {
   async verifyToken(req: any) {
     const tag = this.verifyToken.name;
     try {
-      const token = req.headers.authorization;
+      const token = req.headers.authorization.split(" ")[1];
+      console.log("token ->", token);
+      
       const decoded = await this.jwtService.verifyAsync(token);
       const user = await this.validateUserByJwt(decoded);
       if (!user) throw new UnauthorizedException();

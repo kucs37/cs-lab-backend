@@ -13,7 +13,7 @@ export class User extends Model {
     allowNull: false,
     primaryKey: true,
   })
-  studentCode: number;
+  studentCode: string;
 
   @Column({
     allowNull: false,
