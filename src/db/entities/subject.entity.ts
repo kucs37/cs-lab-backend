@@ -7,27 +7,16 @@ import {
   BeforeUpdate,
 } from "sequelize-typescript";
 @Table
-export class User extends Model {
+export class Subject extends Model {
   @Column({
     type: DataType.STRING,
     allowNull: false,
     primaryKey: true,
   })
-  studentCode: string;
+  subjectId: string;
 
   @Column({
     allowNull: false,
   })
-  firstName: string;
-
-  @Column({
-    allowNull: false,
-  })
-  lastName: string;
-
-  @Column({
-    unique: true,
-    allowNull: false,
-  })
-  email: string;
+  name: string;
 }
