@@ -1,6 +1,5 @@
 import { UsersService } from "./users.service";
 import { UsersController } from "./users.controller";
-import { HttpModule } from "@nestjs/axios";
 import {
   CacheModule,
   Module,
@@ -21,7 +20,6 @@ config();
 @Module({
   imports: [
     CacheModule.register(),
-    HttpModule,
     PassportModule.register({ defaultStrategy: "jwt", session: false }),
     JwtModule.register({
       secretOrPrivateKey: process.env.JWT_SECRET,

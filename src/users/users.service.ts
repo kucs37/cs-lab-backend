@@ -1,4 +1,3 @@
-import { HttpService } from "@nestjs/axios";
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { Observable } from "rxjs";
 import { EnumStatus } from "../services/enum/enum-status";
@@ -8,7 +7,7 @@ import { UserTokenDto } from "./dto/token-.dto";
 @Injectable()
 export class UsersService {
   private logger = new LogService(UsersService.name);
-  constructor(private readonly httpService: HttpService) {}
+  constructor() {}
 
   async api_checkClass(userDto: UserTokenDto) {
     const tag = this.api_checkClass.name;
