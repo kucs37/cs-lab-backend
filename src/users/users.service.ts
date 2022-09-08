@@ -4,24 +4,21 @@ import { Observable } from "rxjs";
 import { EnumStatus } from "../services/enum/enum-status";
 import { LogService } from "../services/log/log.service";
 import { firstValueFrom } from "rxjs";
-import { GoogleAuthenticationService } from "../services/google/googleAuthentication.service";
+import { UserTokenDto } from "./dto/token-.dto";
 @Injectable()
 export class UsersService {
   private logger = new LogService(UsersService.name);
-  constructor(
-    private readonly httpService: HttpService,
-    private readonly googleAuth: GoogleAuthenticationService
-  ) {}
+  constructor(private readonly httpService: HttpService) {}
 
-  async api_findUser(req: any) {
-    const tag = this.api_findUser.name;
+  async api_checkClass(userDto: UserTokenDto) {
+    const tag = this.api_checkClass.name;
     try {
       const resData = {
         resCode: EnumStatus.success,
         resData: { status: "success" },
         msg: "",
       };
-      this.logger.debug("req->", req);
+      this.logger.debug("req->", userDto.test);
       return resData;
     } catch (error) {
       this.logger.error(`${tag} -> `, error);

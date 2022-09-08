@@ -4,7 +4,7 @@
   "description": "",
   "author": "prokittikun",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "somsantech",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",

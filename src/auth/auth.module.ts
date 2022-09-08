@@ -12,8 +12,6 @@ import { JwtModule } from "@nestjs/jwt";
 import { JwtStrategy } from "./strategies/jwt.strategy";
 import { UsersModule } from "../users/users.module";
 import { databaseProviders } from "../db/entities/db.provider";
-import { GoogleStrategy } from "./strategies/google.strategy";
-import { AuthMiddleware } from "../services/middleware/auth.middleware";
 import { config } from "dotenv";
 config();
 @Module({
