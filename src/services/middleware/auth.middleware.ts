@@ -1,37 +1,39 @@
-import { Injectable, NestMiddleware } from "@nestjs/common";
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NestMiddleware,
+  UnauthorizedException,
+} from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
 import { Request, Response, NextFunction } from "express";
-import { Auth, google } from "googleapis";
+import { JwtPayload } from "../../auth/interfaces/jwt-payload.interface";
 import { LogService } from "../log/log.service";
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
   private logger = new LogService(AuthMiddleware.name);
 
-  oauthClient: Auth.OAuth2Client;
-  constructor() {
-    const clientID = process.env.GOOGLE_CLIENT_ID;
-    const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-
-    this.oauthClient = new google.auth.OAuth2(clientID, clientSecret);
-  }
+  constructor(private jwtService: JwtService) {}
   public async use(
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> {
     const token = req.headers.authorization.split(" ")[1];
-    const tokenInfo = await this.oauthClient.getTokenInfo(token);
-    const email = tokenInfo.email;
-    this.logger.debug("tokenData->",tokenInfo)
+    const decoded: JwtPayload = await this.jwtService.verifyAsync(token);
+    const inClass = decoded.inClass;
+    this.logger.debug("inClass ->", inClass);
     try {
-      if (email) {
+      if (inClass) {
         console.log("token is work");
         next();
+      } else {
+        throw new UnauthorizedException();
       }
     } catch (error) {
-      if (error.status !== 404) {
-        throw new error();
-      }
+      this.logger.error(`Middleware -> `, error);
+      throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }
