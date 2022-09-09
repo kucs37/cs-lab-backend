@@ -11,10 +11,11 @@ import {
 } from "@nestjs/common";
 // import { InjectModel } from '@nestjs/mongoose';
 import { Cache } from "cache-manager";
+import { EntityEnum } from "../db/enum/entities-enum";
 import { User } from "../db/entities/user.entity";
 import { LogService } from "../services/log/log.service";
 // import { Model } from 'mongoose';
-// import { EntityEnum } from './../database/entity';
+
 // import { UserDB } from './../database/schema/user.schema';
 
 @Injectable()
@@ -24,7 +25,7 @@ export class UserAuthService implements OnApplicationBootstrap {
 
   constructor(
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-    @Inject("USERS_REPOSITORY")
+    @Inject(EntityEnum.userDB)
     private userDB: typeof User // @InjectModel(EntityEnum.userDB) private userModel: Model<UserDB>,
   ) {}
   async onApplicationBootstrap() {

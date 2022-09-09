@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
-export class FindSubjectsDto {
+export class FindSubjectByIdDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  readonly student: string;
+  readonly subjectId: string;
  
 }
