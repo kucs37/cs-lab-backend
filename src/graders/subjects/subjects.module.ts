@@ -14,12 +14,12 @@ import { config } from "dotenv";
 import { JwtStrategy } from "../../auth/strategies/jwt.strategy";
 import { AuthModule } from "../../auth/auth.module";
 import { databaseProviders } from "../../db/entities/db.provider";
-import { JwtDecodeModule } from './../../services/jwt-decode/jwtDecode.module';
-import { ClassroomModule } from './../classroom/classroom.module';
+import { JwtDecodeModule } from "./../../services/jwt-decode/jwtDecode.module";
+import { ClassroomModule } from "./../classroom/classroom.module";
 config();
 @Module({
   imports: [
-PassportModule.register({ defaultStrategy: "jwt", session: false }),
+    PassportModule.register({ defaultStrategy: "jwt", session: false }),
     JwtModule.register({
       secretOrPrivateKey: process.env.JWT_SECRET,
     }),

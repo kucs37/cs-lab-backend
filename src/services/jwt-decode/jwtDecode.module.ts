@@ -14,11 +14,13 @@ import { UsersModule } from "./../../users/users.module";
 import { AuthService } from "./../../auth/auth.service";
 import { AuthModule } from "../../auth/auth.module";
 import { JwtDecodeService } from "./jwtDecode.service";
-import { SubjectsModule } from './../../graders/subjects/subjects.module';
+import { SubjectsModule } from "./../../graders/subjects/subjects.module";
+import { ClassroomModule } from "./../../graders/classroom/classroom.module";
+import { AuthMiddlewareModule } from "./../middleware/auth.middleware.module";
 config();
 @Module({
   imports: [
-  CacheModule.register(),
+    CacheModule.register(),
     HttpModule,
     PassportModule.register({ defaultStrategy: "jwt", session: false }),
     JwtModule.register({
@@ -27,6 +29,8 @@ config();
     forwardRef(() => UsersModule),
     forwardRef(() => AuthModule),
     forwardRef(() => SubjectsModule),
+    forwardRef(() => ClassroomModule),
+    forwardRef(() => AuthMiddlewareModule),
   ],
   providers: [JwtDecodeService, AuthService, JwtStrategy],
   exports: [JwtDecodeService],

@@ -5,6 +5,7 @@ import { EntityEnum } from "../../db/enum/entities-enum";
 import { EnumStatus } from "../../services/enum/enum-status";
 import { LogService } from "../../services/log/log.service";
 import { SubjectsService } from "./../subjects/subjects.service";
+import { SectionService } from "./../section/section.service";
 
 @Injectable()
 export class ClassroomService {
@@ -14,7 +15,8 @@ export class ClassroomService {
     @Inject(EntityEnum.classroomDB)
     private classroomDB: typeof ClassRoom,
     private jwtDecodeService: JwtDecodeService,
-    private subjectsService: SubjectsService
+    private subjectsService: SubjectsService,
+    private sectionService: SectionService
   ) {}
   async api_findClassByStudentCode(req: any) {
     const tag = this.api_findClassByStudentCode.name;
@@ -36,6 +38,7 @@ export class ClassroomService {
     try {
       const decoded = await this.jwtDecodeService.jwtDecode(req);
       const result = await this.classroomDB.findAll({
+        attributes: { exclude: ["createdAt", "updatedAt"] },
         where: {
           fkStudentCode: decoded.studentCode,
         },
@@ -45,14 +48,26 @@ export class ClassroomService {
         const subjectArray = await this.subjectsService.findSubjectById(
           String(iterator.fkSubjectId)
         );
-        result[index] = Object.assign(JSON.parse(JSON.stringify(result[index])), {
+        const sectionArray = await this.sectionService.findSectionById(
+          String(iterator.fkSectionId)
+        );
+        result[index] = Object.assign(
+          JSON.parse(JSON.stringify(result[index])),
+          {
             subject: subjectArray[0],
-        });
+          }
+        );
+        result[index] = Object.assign(
+          JSON.parse(JSON.stringify(result[index])),
+          {
+            section: sectionArray[0],
+          }
+        );
         // subject.push(subjectArray[0]);
       }
-      
+
       this.logger.debug(`${tag} -> `, subject);
-      return  result;
+      return result;
     } catch (error) {
       this.logger.error(`${tag} -> `, error);
       throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);

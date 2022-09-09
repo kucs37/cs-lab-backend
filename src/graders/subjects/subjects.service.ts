@@ -23,6 +23,7 @@ export class SubjectsService {
       console.log("subjectId: ", subjectId);
       
       const result = await this.subjectDB.findAll({
+        attributes: { exclude: ["createdAt", "updatedAt"] },
         where: {
           subjectId: subjectId,
         },
