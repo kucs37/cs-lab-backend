@@ -42,10 +42,10 @@ config();
   ],
 })
 export class ClassroomModule {
-  basePath = "classrooms";
+  basePath = "classroom";
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(AuthMiddleware).forRoutes({
-      path: `${this.basePath}/studentClass`,
+      path: `${this.basePath}/studentInfo`,
       method: RequestMethod.ALL,
     });
   }
