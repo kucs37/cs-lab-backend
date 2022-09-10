@@ -34,3 +34,7 @@ error: [38;2;249;92;90m[2022-09-09 14:09:41][SubjectsService] =>  findSubjectBy
 error: [38;2;249;92;90m[2022-09-09 14:11:39][SubjectsService] =>  findSubjectById ->  {}  [39m
 error: [38;2;249;92;90m[2022-09-09 14:12:34][SubjectsService] =>  findSubjectById ->  {}  [39m
 error: [38;2;249;92;90m[2022-09-09 14:13:52][SubjectsService] =>  findSubjectById ->  {}  [39m
+error: [38;2;249;92;90m[2022-09-10 01:54:30][ClassroomService] =>  findClassByStudentCode ->  {}  [39m
+error: [38;2;249;92;90m[2022-09-10 01:54:30][ClassroomService] =>  api_findClassByStudentCode ->  {"response":"Error: WHERE parameter \"fkStudentCode\" has invalid \"undefined\" value","status":500,"message":"Error: WHERE parameter \"fkStudentCode\" has invalid \"undefined\" value","name":"HttpException"}  [39m
+error: [38;2;249;92;90m[2022-09-10 01:54:30][ClassroomService] =>  findClassByStudentCode ->  {}  [39m
+error: [38;2;249;92;90m[2022-09-10 01:54:30][ClassroomService] =>  api_findClassByStudentCode ->  {"response":"Error: WHERE parameter \"fkStudentCode\" has invalid \"undefined\" value","status":500,"message":"Error: WHERE parameter \"fkStudentCode\" has invalid \"undefined\" value","name":"HttpException"}  [39m
