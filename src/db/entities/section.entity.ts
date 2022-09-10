@@ -31,4 +31,9 @@ export class Section extends Model {
     allowNull: false,
   })
   name: string;
+
+  @Column({
+    allowNull: false,
+  })
+  status: number;
 }
