@@ -11,18 +11,18 @@ import {
 import { Section } from "./section.entity";
 import { Subject } from "./subject.entity";
 @Table
-export class Lab extends Model {
+export class LabStatus extends Model {
   @Column({
     type: DataType.STRING,
     allowNull: false,
     primaryKey: true,
   })
-  labId: string;
+  labStatusId: string;
 
   @Column({
     allowNull: false,
   })
-  name: string;
+  status: string;
 
   @ForeignKey(() => Subject)
   @BelongsTo(() => Subject, {
@@ -33,12 +33,12 @@ export class Lab extends Model {
   })
   fkSubjectId: Subject;
 
-  // @ForeignKey(() => Section)
-  // @BelongsTo(() => Section, {
-  //   onUpdate: "CASCADE",
-  //   onDelete: "CASCADE",
-  //   hooks: true,
-  //   as: "sectionId",
-  // })
-  // fkSectionId: Section;
+  @ForeignKey(() => Section)
+  @BelongsTo(() => Section, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+    hooks: true,
+    as: "sectionId",
+  })
+  fkSectionId: Section;
 }
