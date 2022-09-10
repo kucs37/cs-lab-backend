@@ -5,7 +5,7 @@ export enum EnumStatus {
 }
 
 export enum EnumDatabaseStatus {
-  enable = '0000',
-  disable = '1000',
-  readOnly = '2000',
+  disable = '0',
+  enable = '1',
+  readOnly = '2',
 }

@@ -44,9 +44,15 @@ config();
 export class ClassroomModule {
   basePath = "classroom";
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthMiddleware).forRoutes({
-      path: `${this.basePath}/studentInfo`,
-      method: RequestMethod.ALL,
-    });
+    consumer.apply(AuthMiddleware).forRoutes(
+      {
+        path: `${this.basePath}/studentInfo`,
+        method: RequestMethod.ALL,
+      },
+      {
+        path: `${this.basePath}/getLabs`,
+        method: RequestMethod.ALL,
+      }
+    );
   }
 }

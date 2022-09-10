@@ -6,6 +6,10 @@ import { EnumStatus } from "../../services/enum/enum-status";
 import { LogService } from "../../services/log/log.service";
 import { SubjectsService } from "./../subjects/subjects.service";
 import { SectionService } from "./../section/section.service";
+import { Lab } from "./../../db/entities/lab.entity";
+import { LabStatus } from "./../../db/entities/labStatus.entity";
+import { FindLabsDto } from "./dto/findLabs";
+import { Op } from "sequelize";
 
 @Injectable()
 export class ClassroomService {
@@ -14,6 +18,10 @@ export class ClassroomService {
   constructor(
     @Inject(EntityEnum.classroomDB)
     private classroomDB: typeof ClassRoom,
+    @Inject(EntityEnum.labDB)
+    private labDB: typeof Lab,
+    @Inject(EntityEnum.labStatusDB)
+    private labStatusDB: typeof LabStatus,
     private jwtDecodeService: JwtDecodeService,
     private subjectsService: SubjectsService,
     private sectionService: SectionService
@@ -68,6 +76,76 @@ export class ClassroomService {
 
       this.logger.debug(`${tag} -> `, subject);
       return result;
+    } catch (error) {
+      this.logger.error(`${tag} -> `, error);
+      throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async api_getLabs(req: any, findLabsDto: FindLabsDto) {
+    const tag = this.api_getLabs.name;
+    try {
+      const resData = {
+        resCode: EnumStatus.success,
+        resData: await this.getLabs(req, findLabsDto),
+        msg: "",
+      };
+      return resData;
+    } catch (error) {
+      this.logger.error(`${tag} -> `, error);
+      throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+  async getLabs(req: any, findLabsDto: FindLabsDto) {
+    const tag = this.getLabs.name;
+    try {
+      const subjectId = findLabsDto.subjectId;
+      const decoded = await this.jwtDecodeService.jwtDecode(req);
+      const classroomData = await this.classroomDB.findAll({
+        attributes: ["fkSectionId"],
+        where: {
+          [Op.and]: [
+            { fkSubjectId: subjectId },
+            { fkStudentCode: decoded.studentCode },
+          ],
+        },
+      });
+      if (classroomData.length === 0) return [];
+      const sectionData = await this.sectionService.findSectionById(
+        String(classroomData[0].fkSectionId)
+      );
+      const labs = await this.labDB.findAll({
+        attributes: { exclude: ["createdAt", "updatedAt"] },
+        where: {
+          fkSubjectId: subjectId,
+        },
+      });
+      this.logger.debug(`${tag} -> `, sectionData);
+      const statusBySection = await this.labStatusDB.findAll({
+        attributes: ["status"],
+        where: {
+          [Op.and]: [
+            { fkSubjectId: subjectId },
+            { fkSectionId: sectionData[0].id },
+          ],
+        },
+      });
+      this.logger.debug(`${tag} -> `, statusBySection);
+
+      if (labs.length === 0 && statusBySection.length === 0) return [];
+      this.logger.debug(statusBySection[0]);
+      for (const [index, iterator] of JSON.parse(
+        statusBySection[0].status
+      ).entries()) {
+        this.logger.debug(iterator);
+        if (labs[index] == undefined) break;
+        labs[index] = Object.assign(JSON.parse(JSON.stringify(labs[index])), {
+          status: iterator,
+          sectionId: sectionData[0].sectionId,
+          sectionName: sectionData[0].name,
+        });
+      }
+      return labs;
     } catch (error) {
       this.logger.error(`${tag} -> `, error);
       throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);

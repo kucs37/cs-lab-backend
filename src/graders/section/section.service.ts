@@ -31,4 +31,23 @@ export class SectionService {
       throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
+  async findSectionBySubjectId(reqSubjectId: string) {
+    //: Promise<Subject[]>
+    const tag = this.findSectionById.name;
+    try {
+      const subjectId = reqSubjectId;
+      const result = await this.sectionDB.findAll({
+        attributes: { exclude: ["createdAt", "updatedAt"] },
+        where: {
+          fkSubjectId: subjectId,
+        },
+      });
+      this.logger.debug(`${tag} -> `, result);
+      return result;
+    } catch (error) {
+      this.logger.error(`${tag} -> `, error);
+      throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 }
