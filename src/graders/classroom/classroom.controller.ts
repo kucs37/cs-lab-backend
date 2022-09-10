@@ -8,7 +8,7 @@ export class ClassroomController {
   constructor(private readonly classroomService: ClassroomService) {}
 
   @ApiBearerAuth()
-  @Get("studentClass")
+  @Get("studentInfo")
   async findAllSubjectBelongToStudent(@Req() req) {
     return this.classroomService.api_findClassByStudentCode(req);
   }
