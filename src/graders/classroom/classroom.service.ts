@@ -96,6 +96,7 @@ export class ClassroomService {
       throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+  
   async getLabs(req: any, findLabsDto: FindLabsDto) {
     const tag = this.getLabs.name;
     try {
@@ -120,6 +121,7 @@ export class ClassroomService {
           fkSubjectId: subjectId,
         },
       });
+
       this.logger.debug(`${tag} -> `, sectionData);
       const statusBySection = await this.labStatusDB.findAll({
         attributes: ["status"],
@@ -139,13 +141,19 @@ export class ClassroomService {
       ).entries()) {
         this.logger.debug(iterator);
         if (labs[index] == undefined) break;
+        // if (iterator === 0) {
+        //   labs[index].status = 0;
+        // }
         labs[index] = Object.assign(JSON.parse(JSON.stringify(labs[index])), {
           status: iterator,
           sectionId: sectionData[0].sectionId,
           sectionName: sectionData[0].name,
         });
       }
-      return labs;
+      const labsClone = labs.filter((item) => {
+        return item.status !== 0;
+      });
+      return labsClone;
     } catch (error) {
       this.logger.error(`${tag} -> `, error);
       throw new HttpException(`${error}`, HttpStatus.INTERNAL_SERVER_ERROR);

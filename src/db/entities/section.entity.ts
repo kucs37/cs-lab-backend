@@ -12,11 +12,11 @@ import { Subject } from "./subject.entity";
 @Table
 export class Section extends Model {
   @Column({
-    type: DataType.STRING,
+    type: DataType.INTEGER,
     allowNull: false,
     // primaryKey: true,
   })
-  sectionId: string;
+  sectionId: number;
 
   @ForeignKey(() => Subject)
   @BelongsTo(() => Subject, {

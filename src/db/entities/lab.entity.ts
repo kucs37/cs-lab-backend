@@ -12,6 +12,7 @@ import { Section } from "./section.entity";
 import { Subject } from "./subject.entity";
 @Table
 export class Lab extends Model {
+  [x: string]: any;
   @Column({
     type: DataType.STRING,
     allowNull: false,
@@ -23,6 +24,11 @@ export class Lab extends Model {
     allowNull: false,
   })
   name: string;
+
+  @Column({
+    allowNull: false,
+  })
+  type: string;
 
   @ForeignKey(() => Subject)
   @BelongsTo(() => Subject, {
