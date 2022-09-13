@@ -10,17 +10,17 @@ import { PassportModule } from "@nestjs/passport";
 import { JwtStrategy } from "../../auth/strategies/jwt.strategy";
 import { JwtModule, JwtService } from "@nestjs/jwt";
 import { config } from "dotenv";
-import { AuthMiddleware } from "./auth.middleware";
 import { UsersModule } from "./../../users/users.module";
 import { AuthService } from "./../../auth/auth.service";
 import { AuthModule } from "../../auth/auth.module";
-import { ClassroomModule } from './../../graders/classroom/classroom.module';
-import { JwtDecodeModule } from "../jwt-decode/jwtDecode.module";
-import { JwtDecodeService } from "../jwt-decode/jwtDecode.service";
+import { JwtDecodeService } from "./jwtDecode.service";
+import { SubjectsModule } from "./../../graders/subjects/subjects.module";
+import { ClassroomModule } from "./../../graders/classroom/classroom.module";
+import { AuthMiddlewareModule } from "./../middleware/auth.middleware.module";
 config();
 @Module({
   imports: [
-  CacheModule.register(),
+    CacheModule.register(),
     HttpModule,
     PassportModule.register({ defaultStrategy: "jwt", session: false }),
     JwtModule.register({
@@ -28,10 +28,11 @@ config();
     }),
     forwardRef(() => UsersModule),
     forwardRef(() => AuthModule),
+    forwardRef(() => SubjectsModule),
     forwardRef(() => ClassroomModule),
-    forwardRef(() => JwtDecodeModule),
+    forwardRef(() => AuthMiddlewareModule),
   ],
-  providers: [AuthMiddleware, AuthService, JwtStrategy, JwtDecodeService],
-  exports: [AuthMiddleware],
+  providers: [JwtDecodeService, AuthService, JwtStrategy],
+  exports: [JwtDecodeService],
 })
-export class AuthMiddlewareModule {}
+export class JwtDecodeModule {}

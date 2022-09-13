@@ -1,5 +1,10 @@
 import { Sequelize } from 'sequelize-typescript';
 import { User } from './entities/user.entity';
+import { Subject } from './entities/subject.entity';
+import { Section } from './entities/section.entity';
+import { ClassRoom } from './entities/classroom.entity';
+import { Lab } from './entities/lab.entity';
+import { LabStatus } from './entities/labStatus.entity';
 
 export const Database = [
   {
@@ -14,6 +19,11 @@ export const Database = [
         database: 'cslab',
       });
       sequelize.addModels([User]);
+      sequelize.addModels([Subject]);
+      sequelize.addModels([Section]);
+      sequelize.addModels([ClassRoom]);
+      sequelize.addModels([Lab]);
+      sequelize.addModels([LabStatus]);
       await sequelize.sync();
       return sequelize;
     },

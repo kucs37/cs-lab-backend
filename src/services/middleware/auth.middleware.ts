@@ -20,11 +20,13 @@ export class AuthMiddleware implements NestMiddleware {
     res: Response,
     next: NextFunction
   ): Promise<void> {
-    const token = req.headers.authorization.split(" ")[1];
-    const decoded: JwtPayload = await this.jwtService.verifyAsync(token);
-    const inClass = decoded.inClass;
-    this.logger.debug("inClass ->", inClass);
     try {
+      if (!req.headers.authorization) throw new UnauthorizedException();
+      this.logger.debug("req.headers.authorization ->", req.headers);
+      const token = req.headers.authorization.split(" ")[1];
+      const decoded: JwtPayload = await this.jwtService.verifyAsync(token);
+      const inClass = decoded.inClass;
+      this.logger.debug("inClass ->", inClass);
       if (inClass) {
         console.log("token is work");
         next();

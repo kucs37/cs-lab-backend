@@ -6,9 +6,9 @@ import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 export class SubjectsController {
   constructor(private readonly subjectsService: SubjectsService) {}
   
-  @ApiBearerAuth()
-  @Get("findAll")
-  async findAll(@Req() req) {
-    // return this.subjectsService.api_checkClass(userDto);
-  }
+  // @ApiBearerAuth()
+  // @Get("studentClass")
+  // async findAllSubjectBelongToStudent(@Req() req) {
+  //   return this.subjectsService.api_findClassByStudentCode(req);
+  // }
 }
