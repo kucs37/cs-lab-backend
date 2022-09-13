@@ -6,17 +6,20 @@ import { ClassRoom } from './entities/classroom.entity';
 import { Lab } from './entities/lab.entity';
 import { LabStatus } from './entities/labStatus.entity';
 
+import { config } from "dotenv";
+config();
+
 export const Database = [
   {
     provide: 'SEQUELIZE',
     useFactory: async () => {
       const sequelize = new Sequelize({
         dialect: 'mysql',
-        host: 'localhost',
+        host: process.env.DB_HOST,
         port: 3306,
-        username: 'root',
-        password: '',
-        database: 'cslab',
+        username: process.env.DB_USER,
+        password: process.env.DB_PASS,
+        database: process.env.DB_NAME,
       });
       sequelize.addModels([User]);
       sequelize.addModels([Subject]);
