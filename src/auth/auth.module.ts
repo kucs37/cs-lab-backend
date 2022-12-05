@@ -6,29 +6,39 @@ import {
 } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { AuthController } from "./auth.controller";
-import { HttpModule } from "@nestjs/axios";
 import { PassportModule } from "@nestjs/passport";
 import { JwtModule } from "@nestjs/jwt";
 import { JwtStrategy } from "./strategies/jwt.strategy";
 import { UsersModule } from "../users/users.module";
 import { databaseProviders } from "../db/entities/db.provider";
 import { config } from "dotenv";
+import { SocketModule } from "../socket/socket.module";
+import { SocketGateway } from "./../socket/socket.gateway";
+import { SocketService } from "./../socket/socket.service";
+import { JwtDecodeService } from "../services/jwt-decode/jwtDecode.service";
 config();
 @Module({
   imports: [
-    // PassportModule.register({ defaultStrategy: "bearer", session: false }),
+    //import { JwtDecodeService } from './../services/jwt-decode/jwtDecode.service';
+    PassportModule.register({ defaultStrategy: "bearer", session: false }),
     PassportModule.register({ defaultStrategy: "jwt", session: false }),
     JwtModule.register({
       secretOrPrivateKey: process.env.JWT_SECRET,
       // signOptions: {
       //     expiresIn: '1y',
       // },
-  }),
+    }),
     forwardRef(() => UsersModule),
-    HttpModule,
+    forwardRef(() => SocketModule),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, ...databaseProviders], // GoogleStrategy
+  providers: [
+    AuthService,
+    JwtStrategy,
+    ...databaseProviders,
+    SocketGateway,
+    JwtDecodeService,
+  ], // GoogleStrategy
   exports: [AuthService],
 })
 export class AuthModule {
