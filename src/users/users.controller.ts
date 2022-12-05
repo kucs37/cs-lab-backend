@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Headers,
   Post,
   Req,
@@ -20,7 +21,13 @@ export class UsersController {
   
   @ApiBearerAuth()
   @Post("checkClass")
-  async checkClass(@Body() userDto: UserTokenDto, @Req() req) {
-    return this.usersService.api_checkClass(userDto);
+  async checkClass(@Req() req) {
+    return this.usersService.api_checkClass();
+  }
+
+  @ApiBearerAuth()
+  @Get("getRole")
+  async getRole(@Req() req) {
+    return this.usersService.api_getRole(req);
   }
 }

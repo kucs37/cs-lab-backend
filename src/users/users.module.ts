@@ -16,6 +16,7 @@ import { JwtStrategy } from "../auth/strategies/jwt.strategy";
 import { JwtModule, JwtService } from "@nestjs/jwt";
 import { config } from "dotenv";
 import { AuthMiddlewareModule } from "../services/middleware/auth.middleware.module";
+import { JwtDecodeModule } from "../services/jwt-decode/jwtDecode.module";
 config();
 @Module({
   imports: [
@@ -26,6 +27,8 @@ config();
     }),
     forwardRef(() => AuthModule),
     forwardRef(() => AuthMiddlewareModule),
+    forwardRef(() => JwtDecodeModule),
+
   ],
   controllers: [UsersController],
   providers: [
