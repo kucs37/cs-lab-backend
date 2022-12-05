@@ -5,4 +5,8 @@ export enum EntityEnum {
   classroomDB = "CLASSROOMS_REPOSITORY",
   labDB = "LABS_REPOSITORY",
   labStatusDB = "LAB_STATUSES_REPOSITORY",
+  roleDB = "ROLES_REPOSITORY",
+  permissionDB = "PERMISSIONS_REPOSITORY",
+  rolePermissionDB = "ROLE_PERMISSIONS_REPOSITORY",
+  userRoleDB = "USER_ROLES_REPOSITORY",
 }

@@ -5,6 +5,10 @@ import { Section } from './entities/section.entity';
 import { ClassRoom } from './entities/classroom.entity';
 import { Lab } from './entities/lab.entity';
 import { LabStatus } from './entities/labStatus.entity';
+import { Role } from './entities/role.entity';
+import { Permission } from './entities/permission.entity';
+import { RolePermission } from './entities/rolePermission.entity';
+import { UserRole } from './entities/userRole.entity';
 
 export const Database = [
   {
@@ -24,6 +28,10 @@ export const Database = [
       sequelize.addModels([ClassRoom]);
       sequelize.addModels([Lab]);
       sequelize.addModels([LabStatus]);
+      sequelize.addModels([Role]);
+      sequelize.addModels([Permission]);
+      sequelize.addModels([RolePermission]);
+      sequelize.addModels([UserRole]);
       await sequelize.sync();
       return sequelize;
     },

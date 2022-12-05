@@ -5,6 +5,10 @@ import { Subject } from "./subject.entity";
 import { User } from "./user.entity";
 import { Lab } from './lab.entity';
 import { LabStatus } from "./labStatus.entity";
+import { Role } from './role.entity';
+import { Permission } from "./permission.entity";
+import { RolePermission } from "./rolePermission.entity";
+import { UserRole } from "./userRole.entity";
 export const databaseProviders = [
   {
     provide: "USERS_REPOSITORY",
@@ -29,5 +33,21 @@ export const databaseProviders = [
   {
     provide: "LAB_STATUSES_REPOSITORY",
     useValue: LabStatus,
+  },
+  {
+    provide: "ROLES_REPOSITORY",
+    useValue: Role,
+  },
+  {
+    provide: "PERMISSIONS_REPOSITORY",
+    useValue: Permission,
+  },
+  {
+    provide: "ROLE_PERMISSIONS_REPOSITORY",
+    useValue: RolePermission,
+  },
+  {
+    provide: "USER_ROLES_REPOSITORY",
+    useValue: UserRole,
   },
 ];
