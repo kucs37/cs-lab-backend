@@ -14,9 +14,11 @@ import { Cache } from "cache-manager";
 import { EntityEnum } from "../db/enum/entities-enum";
 import { User } from "../db/entities/user.entity";
 import { LogService } from "../services/log/log.service";
+import { UsersService } from "./users.service";
 // import { Model } from 'mongoose';
 
 // import { UserDB } from './../database/schema/user.schema';
+import { Role } from './../db/entities/role.entity';
 
 @Injectable()
 export class UserAuthService implements OnApplicationBootstrap {
@@ -25,11 +27,13 @@ export class UserAuthService implements OnApplicationBootstrap {
 
   constructor(
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    private userService: UsersService,
     @Inject(EntityEnum.userDB)
     private userDB: typeof User // @InjectModel(EntityEnum.userDB) private userModel: Model<UserDB>,
   ) {}
   async onApplicationBootstrap() {
     this.clearCache();
+    this.findUser("kittikun.bu@ku.th")
   }
 
   async findUser(email: string): Promise<UserCache> {
@@ -52,6 +56,7 @@ export class UserAuthService implements OnApplicationBootstrap {
           studentCode: null,
           firstName: null,
           lastName: null,
+          role: []
           // email: "",
         };
         return userCache;
@@ -63,9 +68,10 @@ export class UserAuthService implements OnApplicationBootstrap {
         studentCode: result.studentCode,
         firstName: result.firstName,
         lastName: result.lastName,
-        // email: result.email,
+        role: await this.userService.getRole(result.studentCode)
       };
-
+      console.log(userCache);
+      
       this.logger.debug(`${tag} data from DB.`);
       this.setCache(userCache);
       return userCache;
@@ -113,5 +119,6 @@ export interface UserCache {
   studentCode: string;
   firstName: string;
   lastName: string;
+  role: Role[];
   // email: string;
 }
