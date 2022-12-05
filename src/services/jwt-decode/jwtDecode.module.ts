@@ -17,6 +17,7 @@ import { JwtDecodeService } from "./jwtDecode.service";
 import { SubjectsModule } from "./../../graders/subjects/subjects.module";
 import { ClassroomModule } from "./../../graders/classroom/classroom.module";
 import { AuthMiddlewareModule } from "./../middleware/auth.middleware.module";
+import { SocketModule } from "../../socket/socket.module";
 config();
 @Module({
   imports: [
@@ -31,6 +32,8 @@ config();
     forwardRef(() => SubjectsModule),
     forwardRef(() => ClassroomModule),
     forwardRef(() => AuthMiddlewareModule),
+    forwardRef(() => SocketModule),
+
   ],
   providers: [JwtDecodeService, AuthService, JwtStrategy],
   exports: [JwtDecodeService],
