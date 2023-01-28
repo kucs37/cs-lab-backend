@@ -33,7 +33,7 @@ export const Database = [
       sequelize.addModels([RolePermission]);
       sequelize.addModels([UserRole]);
       UserRole.removeAttribute('id');
-      await sequelize.sync({ alter: true, force: true });
+      await sequelize.sync({ alter: true});
       return sequelize;
     },
   },
