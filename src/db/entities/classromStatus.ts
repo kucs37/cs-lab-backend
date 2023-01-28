@@ -12,14 +12,19 @@ import { User } from "./user.entity";
 import { Subject } from "./subject.entity";
 import { Section } from "./section.entity";
 @Table
-export class ClassRoom extends Model {
+export class ClassRoomStatus extends Model {
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
     primaryKey: true,
     autoIncrement: true,
   })
-  classroomId: number;
+  classroomStatusId: number;
+
+  @Column({
+    allowNull: false,
+  })
+  status: number;
 
   @ForeignKey(() => User)
   @BelongsTo(() => User, {

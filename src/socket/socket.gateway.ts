@@ -33,43 +33,32 @@ export class SocketGateway
 
   constructor(private jwtService: JwtService) {}
   @WebSocketServer() private server: Server;
-  private clientId: string[] = [];
+  private clientId = new Set();
   afterInit(server: Socket) {
     //
   }
 
   handleDisconnect(client: Socket) {
     this.logger.debug(`${this.handleDisconnect.name}`, client.id);
-    this.clientId = this.clientId.filter((id) => id !== client.id);
-    this.server.emit("userCount", { userCount: this.clientId.length });
+    this.clientId.delete(client.id);
+    this.server.emit("userCount", { userCount: this.clientId.size });
   }
 
   handleConnection(@ConnectedSocket() client: Socket) {
     this.logger.debug(`${this.handleConnection.name} -> `, client.id);
-    this.server.emit("userCount", { userCount: this.clientId.length });
+    this.server.emit("userCount", { userCount: this.clientId.size });
     // console.log(this.users);
   }
 
-  @SubscribeMessage("checkIn")
+  @SubscribeMessage("heartbeat")
   async checkIn(
     @ConnectedSocket() client: Socket,
     @MessageBody() token: string
   ) {
-    // const result = await this.jwtService.verifyAsync(token);
-    // if (!result) throw new UnauthorizedException();
-    this.clientId.push(client.id);
-    // this.users++;
-    this.server.emit("userCount", { userCount: this.clientId.length });
+    const result = await this.jwtService.verifyAsync(token);
+    if (!result) throw new UnauthorizedException();
+    this.clientId.add(client.id); // todo
+    this.server.emit("userCount", { userCount: this.clientId.size });
     console.log("checkIn Success");
   }
-  // @SubscribeMessage('getUserCount')
-  // async onSubscribe(@MessageBody() getUserCount: string) {
-  //     this.server.emit('userCount', { userCount: this.users });
-  //     console.log('subscribe ->', this.users);
-  // }
-  // @SubscribeMessage('chat')
-  // async broadcast() {
-  //     this.logger.debug('send message realtime success');
-  //     this.server.emit('events', { topic: 'new' });
-  // }
 }

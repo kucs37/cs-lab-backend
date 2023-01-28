@@ -17,8 +17,6 @@ import { AuthModule } from "../../auth/auth.module";
 import { ClassroomModule } from './../../graders/classroom/classroom.module';
 import { JwtDecodeModule } from "../jwt-decode/jwtDecode.module";
 import { JwtDecodeService } from "../jwt-decode/jwtDecode.service";
-import { SocketModule } from './../../socket/socket.module';
-import { SocketGateway } from "./../../socket/socket.gateway";
 config();
 @Module({
   imports: [
@@ -32,9 +30,8 @@ CacheModule.register(),
     forwardRef(() => AuthModule),
     forwardRef(() => ClassroomModule),
     forwardRef(() => JwtDecodeModule),
-    forwardRef(() => SocketModule),
   ],
-  providers: [AuthMiddleware, AuthService, JwtStrategy, JwtDecodeService, SocketGateway],
+  providers: [AuthMiddleware, AuthService, JwtStrategy, JwtDecodeService],
   exports: [AuthMiddleware],
 })
 export class AuthMiddlewareModule {}

@@ -14,9 +14,17 @@ export class Section extends Model {
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
+    primaryKey: true,
+    autoIncrement: true,
+  })
+  id: number;
+
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
     // primaryKey: true,
   })
-  sectionId: number;
+  section: number;
 
   @ForeignKey(() => Subject)
   @BelongsTo(() => Subject, {

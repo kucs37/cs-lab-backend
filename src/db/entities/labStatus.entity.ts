@@ -13,11 +13,12 @@ import { Subject } from "./subject.entity";
 @Table
 export class LabStatus extends Model {
   @Column({
-    type: DataType.STRING,
+    type: DataType.INTEGER,
     allowNull: false,
     primaryKey: true,
+    autoIncrement: true,
   })
-  labStatusId: string;
+  labStatusId: number;
 
   @Column({
     allowNull: false,

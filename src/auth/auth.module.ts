@@ -12,9 +12,6 @@ import { JwtStrategy } from "./strategies/jwt.strategy";
 import { UsersModule } from "../users/users.module";
 import { databaseProviders } from "../db/entities/db.provider";
 import { config } from "dotenv";
-import { SocketModule } from "../socket/socket.module";
-import { SocketGateway } from "./../socket/socket.gateway";
-import { SocketService } from "./../socket/socket.service";
 import { JwtDecodeService } from "../services/jwt-decode/jwtDecode.service";
 config();
 @Module({
@@ -29,14 +26,12 @@ config();
       // },
     }),
     forwardRef(() => UsersModule),
-    forwardRef(() => SocketModule),
   ],
   controllers: [AuthController],
   providers: [
     AuthService,
     JwtStrategy,
     ...databaseProviders,
-    SocketGateway,
     JwtDecodeService,
   ], // GoogleStrategy
   exports: [AuthService],

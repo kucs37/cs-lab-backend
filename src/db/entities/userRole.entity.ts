@@ -12,6 +12,13 @@ import { Role } from "./role.entity";
 import { User } from "./user.entity";
 @Table
 export class UserRole extends Model {
+  // @Column({
+  //   type: DataType.INTEGER,
+  //   allowNull: false,
+  //   primaryKey: true,
+  //   autoIncrement: true,
+  // })
+  id: false;
 
   @ForeignKey(() => User)
   @BelongsTo(() => User, {
@@ -30,4 +37,5 @@ export class UserRole extends Model {
     as: "roleId",
   })
   fkRoleId: Role;
+
 }

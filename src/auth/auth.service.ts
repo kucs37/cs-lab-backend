@@ -9,7 +9,6 @@ import { EnumStatus } from "../services/enum/enum-status";
 import { LogService } from "../services/log/log.service";
 import { UserAuthService } from "../users/user-auth.service";
 import { JwtPayload } from "./interfaces/jwt-payload.interface";
-import { SocketGateway } from './../socket/socket.gateway';
 
 @Injectable()
 export class AuthService {

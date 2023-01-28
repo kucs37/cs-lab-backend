@@ -146,7 +146,7 @@ export class ClassroomService {
         // }
         labs[index] = Object.assign(JSON.parse(JSON.stringify(labs[index])), {
           status: iterator,
-          sectionId: sectionData[0].sectionId,
+          sectionId: sectionData[0].section,
           sectionName: sectionData[0].name,
         });
       }

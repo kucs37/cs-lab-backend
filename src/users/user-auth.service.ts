@@ -9,15 +9,12 @@ import {
   Injectable,
   OnApplicationBootstrap,
 } from "@nestjs/common";
-// import { InjectModel } from '@nestjs/mongoose';
 import { Cache } from "cache-manager";
 import { EntityEnum } from "../db/enum/entities-enum";
 import { User } from "../db/entities/user.entity";
 import { LogService } from "../services/log/log.service";
 import { UsersService } from "./users.service";
-// import { Model } from 'mongoose';
 
-// import { UserDB } from './../database/schema/user.schema';
 import { Role } from './../db/entities/role.entity';
 
 @Injectable()

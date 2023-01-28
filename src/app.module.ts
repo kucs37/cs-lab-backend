@@ -12,8 +12,6 @@ import { JwtDecodeModule } from "./services/jwt-decode/jwtDecode.module";
 import { ClassroomModule } from './graders/classroom/classroom.module';
 import { SectionModule } from './graders/section/section.module';
 import { AdministratorModule } from './administrator/administrator.module';
-import { SocketGateway } from "./socket/socket.gateway";
-import { SocketModule } from './socket/socket.module';
 import { JwtService } from "@nestjs/jwt";
 
 @Module({
@@ -28,9 +26,8 @@ import { JwtService } from "@nestjs/jwt";
     ClassroomModule,
     SectionModule,
     AdministratorModule,
-    SocketModule,
   ],
   controllers: [AppController],
-  providers: [AppService, LogService, SocketGateway, JwtService],
+  providers: [AppService, LogService, JwtService],
 })
 export class AppModule {}
