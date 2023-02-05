@@ -26,12 +26,12 @@ export class ClassroomService {
     private subjectsService: SubjectsService,
     private sectionService: SectionService
   ) {}
-  async api_findClassByStudentCode(req: any) {
-    const tag = this.api_findClassByStudentCode.name;
+  async api_findClassByStudentId(req: any) {
+    const tag = this.api_findClassByStudentId.name;
     try {
       const resData = {
         resCode: EnumStatus.success,
-        resData: await this.findClassByStudentCode(req),
+        resData: await this.findClassByStudentId(req),
         msg: "",
       };
       return resData;
@@ -41,14 +41,14 @@ export class ClassroomService {
     }
   }
 
-  async findClassByStudentCode(req: any) {
-    const tag = this.findClassByStudentCode.name;
+  async findClassByStudentId(req: any) {
+    const tag = this.findClassByStudentId.name;
     try {
       const decoded = await this.jwtDecodeService.jwtDecode(req);
       const result = await this.classroomDB.findAll({
         attributes: { exclude: ["createdAt", "updatedAt"] },
         where: {
-          fkStudentCode: decoded.studentCode,
+          fkstudentId: decoded.studentId,
         },
       });
       const subject = [];
@@ -107,7 +107,7 @@ export class ClassroomService {
         where: {
           [Op.and]: [
             { fkSubjectId: subjectId },
-            { fkStudentCode: decoded.studentCode },
+            { fkstudentId: decoded.studentId },
           ],
         },
       });
