@@ -22,7 +22,7 @@ export class AuthService {
     const tag = this.api_verifyToken.name;
     try {
       const resData = {
-        resCode: EnumStatus.success,
+        // resCode: EnumStatus.success,
         resData: await this.verifyToken(req),
         msg: "",
       };

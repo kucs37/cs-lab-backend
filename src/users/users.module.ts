@@ -17,10 +17,18 @@ import { JwtModule, JwtService } from "@nestjs/jwt";
 import { config } from "dotenv";
 import { AuthMiddlewareModule } from "../services/middleware/auth.middleware.module";
 import { JwtDecodeModule } from "../services/jwt-decode/jwtDecode.module";
+import { MongooseModule } from "@nestjs/mongoose";
+import { EntityEnumMongo } from "../database/entity";
+import { ProductSchema } from "../database/schema/product.schema";
+import { UserSchema } from "../database/schema/user.schema";
 config();
 @Module({
   imports: [
     CacheModule.register(),
+    MongooseModule.forFeature([
+      { name: EntityEnumMongo.userDB, schema: UserSchema },
+      // { name: EntityEnumMongo.roleDB, schema: UserSchema },
+    ]),
     PassportModule.register({ defaultStrategy: "jwt", session: false }),
     JwtModule.register({
       secretOrPrivateKey: process.env.JWT_SECRET,
