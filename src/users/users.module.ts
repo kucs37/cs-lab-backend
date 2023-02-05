@@ -19,7 +19,7 @@ import { AuthMiddlewareModule } from "../services/middleware/auth.middleware.mod
 import { JwtDecodeModule } from "../services/jwt-decode/jwtDecode.module";
 import { MongooseModule } from "@nestjs/mongoose";
 import { EntityEnumMongo } from "../database/entity";
-import { ProductSchema } from "../database/schema/product.schema";
+// import { ProductSchema } from "../database/schema/product.schema";
 import { UserSchema } from "../database/schema/user.schema";
 config();
 @Module({
