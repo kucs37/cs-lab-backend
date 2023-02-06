@@ -29,6 +29,7 @@ jobs:
             - run: npm i yarn -g && yarn && yarn build
 
     deploy:
+        needs: build
         runs-on: self-hosted
 
         steps:
