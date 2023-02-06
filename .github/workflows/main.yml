@@ -20,11 +20,10 @@ jobs:
     makeEnv:
         runs-on: self-hosted
         steps:
-            - name: 'Create env file'
             - run: |
-                touch .env
-                echo PORT=$PORT >> .env
-                echo JWT_SECRET=$JWT_SECRET >> .env
+                  touch .env
+                  echo PORT=$PORT >> .env
+                  echo JWT_SECRET=$JWT_SECRET >> .env
 
     build:
         runs-on: self-hosted
@@ -36,9 +35,8 @@ jobs:
               with:
                   node-version: 16.13.2
             - run: |
-                yarn
-                yarn build
-                pm2 stop 0
-                pm2 start 0 --watch
-                pm2 save
-
+                  yarn
+                  yarn build
+                  pm2 stop 0
+                  pm2 start 0 --watch
+                  pm2 save
