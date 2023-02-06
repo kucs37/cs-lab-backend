@@ -14,6 +14,8 @@ import { SectionModule } from "./graders/section/section.module";
 import { AdministratorModule } from "./administrator/administrator.module";
 import { JwtService } from "@nestjs/jwt";
 import { MongooseModule } from "@nestjs/mongoose";
+import { config } from "dotenv";
+config();
 
 @Module({
   imports: [
@@ -27,10 +29,7 @@ import { MongooseModule } from "@nestjs/mongoose";
     ClassroomModule,
     SectionModule,
     AdministratorModule,
-    MongooseModule.forRoot(
-      "mongodb://root:123@43.229.133.161:27017/cslab?authSource=admin",
-      
-    ),
+    MongooseModule.forRoot(process.env.MONGO_URL),
   ],
   controllers: [AppController],
   providers: [AppService, LogService, JwtService],

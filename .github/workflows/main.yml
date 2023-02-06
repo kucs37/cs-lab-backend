@@ -15,6 +15,7 @@ on:
 env:
     JWT_SECRET: ${{secrets.JWT_SECRET}}
     PORT: 3000
+    MONGO_URL: ${{secrets.MONGO_URL}}
 
 jobs:
     build:
@@ -27,8 +28,9 @@ jobs:
                   node-version: 16.13.2
             - run: |
                   touch .env
-                  echo PORT=3000 >> .env
-                  echo JWT_SECRET=${{secrets.JWT_SECRET}} >> .env
+                  echo PORT=$PORT >> .env
+                  echo JWT_SECRET=$JWT_SECRET >> .env
+                  echo MONGO_URL=$MONGO_URL >> .env
                   cat .env
             - run: |
                   yarn
