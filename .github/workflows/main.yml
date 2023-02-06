@@ -20,10 +20,13 @@ jobs:
     makeEnv:
         runs-on: self-hosted
         steps:
-            - run: |
-                  touch .env
-                  echo PORT=$PORT >> .env
-                  echo JWT_SECRET=$JWT_SECRET >> .env
+            - name: Make envfile
+              uses: SpicyPizza/create-envfile@v1.3
+              with:
+                envkey_JWT_SECRET: $JWT_SECRET
+                envkey_PORT: $PORT
+                file_name: .env
+                fail_on_empty: false
 
     build:
         needs: makeEnv
