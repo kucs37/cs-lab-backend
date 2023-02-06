@@ -14,7 +14,7 @@ on:
 
 env:
     JWT_SECRET: ${{secrets.JWT_SECRET}}
-    PORT: 80
+    PORT: 3000
 
 jobs:
     build:
