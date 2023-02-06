@@ -26,4 +26,14 @@ jobs:
               uses: actions/setup-node@v3
               with:
                   node-version: 16.13.2
-            - run: npm i yarn -g && yarn && yarn build && yarn start:prod
+            - run: npm i yarn -g && yarn && yarn build
+
+    deploy:
+        runs-on: self-hosted
+
+        steps:
+            - uses: actions/setup-node@v3
+              with: 
+                  node-version: 16.13.2
+            - run: yarn start:prod
+
