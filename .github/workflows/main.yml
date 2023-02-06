@@ -17,6 +17,15 @@ env:
     PORT: 3000
 
 jobs:
+    makeEnv:
+        runs-on: self-hosted
+        steps:
+            - name: 'Create env file'
+            - run: |
+                touch .env
+                echo PORT=$PORT >> .env
+                echo JWT_SECRET=$JWT_SECRET >> .env
+
     build:
         runs-on: self-hosted
 
