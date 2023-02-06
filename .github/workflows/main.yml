@@ -24,6 +24,7 @@ jobs:
                   touch .env
                   echo PORT=3000 >> .env
                   echo JWT_SECRET=${{secrets.JWT_SECRET}} >> .env
+                  cat .env
 
     build:
         needs: makeEnv
