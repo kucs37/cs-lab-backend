@@ -9,6 +9,6 @@ export class SubjectsController {
   // @ApiBearerAuth()
   // @Get("studentClass")
   // async findAllSubjectBelongToStudent(@Req() req) {
-  //   return this.subjectsService.api_findClassByStudentCode(req);
+  //   return this.subjectsService.api_findClassBystudentId(req);
   // }
 }

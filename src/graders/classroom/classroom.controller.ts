@@ -11,7 +11,7 @@ export class ClassroomController {
   @ApiBearerAuth()
   @Get("studentInfo")
   async findAllSubjectBelongToStudent(@Req() req) {
-    return this.classroomService.api_findClassByStudentCode(req);
+    return this.classroomService.api_findClassByStudentId(req);
   }
 
   @ApiBearerAuth()

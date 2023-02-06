@@ -13,6 +13,9 @@ import { UsersModule } from "../users/users.module";
 import { databaseProviders } from "../db/entities/db.provider";
 import { config } from "dotenv";
 import { JwtDecodeService } from "../services/jwt-decode/jwtDecode.service";
+import { MongooseModule } from "@nestjs/mongoose";
+import { EntityEnumMongo } from "../database/entity";
+import { UserSchema } from "../database/schema/user.schema";
 config();
 @Module({
   imports: [
@@ -25,6 +28,10 @@ config();
       //     expiresIn: '1y',
       // },
     }),
+    MongooseModule.forFeature([
+      { name: EntityEnumMongo.userDB, schema: UserSchema },
+      // { name: EntityEnumMongo.roleDB, schema: UserSchema },
+    ]),
     forwardRef(() => UsersModule),
   ],
   controllers: [AuthController],

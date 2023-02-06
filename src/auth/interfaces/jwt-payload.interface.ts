@@ -4,7 +4,7 @@ export interface JwtPayload {
   picture: string;
   sub: string;
   inClass: boolean
-  studentCode: string
+  studentId: string
   firstName: string
   lastName: string
   iat: number;
