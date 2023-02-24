@@ -14,7 +14,7 @@ on:
 
 env:
     JWT_SECRET: ${{secrets.JWT_SECRET}}
-    PORT: 3000
+    PORT: 5005
     MONGO_URL: ${{secrets.MONGO_URL}}
 
 jobs:
